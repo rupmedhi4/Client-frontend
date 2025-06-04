@@ -32,7 +32,7 @@ export const loginUser = createAsyncThunk(
   'auth/loginUser',
   async (userData, { rejectWithValue }) => {
     try {
-      const res = await axios.post(`${apiAgent.login}`,userData,{
+      const res = await axios.post(`${apiAgent.login}`, userData, {
         withCredentials: true
       }, {
         headers: {
@@ -52,7 +52,8 @@ export const loginUser = createAsyncThunk(
 const authSlice = createSlice({
   name: 'authentication',
   initialState: {
-    user:{},
+    user: {},
+    isLogin: false,
     loading: false,
     error: null
   },
@@ -77,23 +78,23 @@ const authSlice = createSlice({
       })
       .addCase(signupUser.rejected, (state, action) => {
         state.loading = false;
+        state.isLogin = true;
         state.error = action.payload;
       })
 
-         //Login
+      //Login
       .addCase(loginUser.pending, (state) => {
         state.loading = true
       })
-      .addCase(loginUser.fulfilled, (state,action) => {
-        console.log(action.payload);
-        
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.isLogin = true;
         state.loading = false,
           state.user = {
-          name: action.payload.user.name,
-          email: action.payload.user.email,
-        }
+            name: action.payload.user.name,
+            email: action.payload.user.email,
+          }
       })
-      .addCase(loginUser.rejected, (state,action) => {
+      .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
