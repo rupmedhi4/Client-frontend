@@ -35,21 +35,14 @@ export default function ViewProduct() {
     : [];
 
   filteredData = filteredData.slice(0, 12)
-  console.log(filteredData);
-
-
-
 
   if (loading) return <LoadingScreen />;
   if (!product) return <div className="text-center text-red-500 mt-10">Product not found</div>;
+
   return (
     <>
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 min-h-screen bg-gray-100">
-        <div className="text-sm text-gray-600 mb-4">
-          <a href="/" className="hover:text-blue-600">Home</a> &gt;
-          <a href="/products" className="hover:text-blue-600"> Products</a> &gt;
-          <span className="text-gray-800">{product.name}</span>
-        </div>
+      <div className="container mx-auto pt-4 px-4 sm:px-6 lg:px-8 py-6 min-h-screen bg-gray-100">
+        
 
         <div className="flex flex-col lg:flex-row gap-6">
           <div className="lg:w-2/5 bg-white rounded-lg shadow-md p-6">
@@ -107,8 +100,9 @@ export default function ViewProduct() {
             </div>
           </div>
         </div>
-      </div>
+
       <ShowProducts products={filteredData} title={"Related Products"} />
+      </div>
     </>
   );
 }

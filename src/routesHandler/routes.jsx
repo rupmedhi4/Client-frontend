@@ -6,6 +6,7 @@ import LoadingScreen from "../components/LoadingScreen/LoadingScreen";
 import ProtectedRoute from "./ProtectedRoute";
 import ViewProduct from "../components/ViewProduct/ViewProduct";
 import AllProducts from "../components/AllProducts/AllProducts";
+import DetailsCategoryProducts from "../components/home/Category/DetailsCategoryProducts";
 
 const Signup = lazy(() => import('../components/authPages/Signup'))
 
@@ -49,6 +50,14 @@ const routes = [
     element: (
       <ProtectedRoute>
         <AllProducts />
+      </ProtectedRoute>
+    )
+  },
+  {
+    path: "/products/:category",
+    element: (
+      <ProtectedRoute>
+        <DetailsCategoryProducts />
       </ProtectedRoute>
     )
   },

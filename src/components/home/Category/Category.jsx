@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const categories = [
   {
@@ -52,30 +53,38 @@ const categories = [
 ];
 
 
-export default function Category() {
-    return (
-        <div className="bg-gray-50 py-10 px-4 max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold text-center mb-8 ">
-                Shop Popular Categories
-            </h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 text-center">
-                {categories.map((cat, index) => (
-                    <div
-                        key={index}
-                        className="flex flex-col items-center mb-6 "
-                    >
-                        <div className="bg-gray-200 rounded-full w-28 h-28 flex items-center justify-center mb-3 overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-lg">
-                            <img
-                                src={cat.image}
-                                alt={cat.name}
-                                className="w-36 h-36 object-contain"
-                            />
-                        </div>
-                        <span className="text-sm font-medium">{cat.name}</span>
-                    </div>
-                ))}
-            </div>
 
-        </div>
-    );
+export default function Category() {
+  const navigate = useNavigate()
+
+  const categoryHandler = (category) => {
+      navigate(`/products/${category}`)
+  }
+
+  return (
+    <div className="bg-gray-50 py-10 px-4 max-w-6xl mx-auto">
+      <h2 className="text-3xl font-bold text-center mb-8 ">
+        Shop Popular Categories
+      </h2>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 text-center">
+        {categories.map((cat, index) => (
+          <div
+            onClick={()=>categoryHandler(cat.name)}
+            key={index}
+            className="flex flex-col items-center mb-6 cursor-pointer "
+          >
+            <div className="bg-gray-200 rounded-full w-28 h-28 flex items-center justify-center mb-3 overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-lg">
+              <img
+                src={cat.image}
+                alt={cat.name}
+                className="w-36 h-36 object-contain"
+              />
+            </div>
+            <span className="text-sm font-medium">{cat.name}</span>
+          </div>
+        ))}
+      </div>
+
+    </div>
+  );
 }

@@ -27,6 +27,8 @@ export const getSingleProduct = createAsyncThunk(
           withCredentials: true,
         }
       )
+      console.log(res);
+      
       return res.data.products;
     } catch (error) {
       return rejectWithValue(error)
@@ -34,6 +36,36 @@ export const getSingleProduct = createAsyncThunk(
   }
 )
 
+export const addToCart = createAsyncThunk(
+  'product/addToCart',
+  async (id, { rejectWithValue }) => {
+    try {
+      const res = await axios.post(`${apiAgent.addToCart}/${id}`,{}, {
+        withCredentials: true,
+      });
+      console.log(res);
+      return res;
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const fetchAddToCart = createAsyncThunk(
+  'product/fetchAddToCart',
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await axios.get(apiAgent.getAddToCart, {
+        withCredentials: true,
+      });
+      return res.data.data;
+    } catch (error) {
+      console.error("Error fetching add to cart data:", error);
+      return rejectWithValue(error);
+    }
+  }
+);
 
 const productSlice = createSlice({
   name: 'product',
@@ -41,6 +73,7 @@ const productSlice = createSlice({
     loading: false,
     error: null,
     allCreateProducts: [],
+    addToCart:[]
   },
   reducers: {
 
@@ -54,7 +87,6 @@ const productSlice = createSlice({
       .addCase(getAllProducts.fulfilled, (state, action) => {
         state.loading = false;
         state.allCreateProducts = action.payload;
-        console.log("Products fetched:", action.payload);
       })
       .addCase(getAllProducts.rejected, (state, action) => {
         state.loading = false;
@@ -70,6 +102,32 @@ const productSlice = createSlice({
         state.loading = false;
       })
       .addCase(getSingleProduct.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      //addToCart
+      .addCase(addToCart.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(addToCart.fulfilled, (state, action) => {
+        state.loading = false;
+        state.addToCart=action.payload.data.user.addToCart
+      })
+      .addCase(addToCart.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      //fetchAddToCart
+      .addCase(fetchAddToCart.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchAddToCart.fulfilled, (state, action) => {
+        state.loading = false;        
+        state.addToCart=action.payload
+      })
+      .addCase(fetchAddToCart.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

@@ -3,10 +3,13 @@ import Cookies from 'js-cookie';
 import { IoCartOutline } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 export default function Header() {
     const cookie = Cookies.get("jwt");
     const navigate = useNavigate()
+    const {addToCart}=useSelector(state=>state.product)
+console.log(addToCart);
 
     return (
         <header className="bg-white shadow-md rounded-full mt-2">
@@ -34,7 +37,7 @@ export default function Header() {
                     <div className="relative cursor-pointer">
                     <div>
                         <IoCartOutline className="text-2xl hover:text-green-600" />
-                        <span className="absolute -top-2 -right-2 text-xs bg-red-500 text-white rounded-full px-1">3</span>
+                        <span className="absolute -top-2 -right-2 text-xs bg-red-500 text-white rounded-full px-1">{addToCart.length > 0 ? addToCart.length : 0 }</span>
                     </div>
                     </div>
                     {
