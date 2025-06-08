@@ -5,6 +5,7 @@ import Home from '../components/home/Home'
 import LoadingScreen from "../components/LoadingScreen/LoadingScreen";
 import ProtectedRoute from "./ProtectedRoute";
 import ViewProduct from "../components/ViewProduct/ViewProduct";
+import AllProducts from "../components/AllProducts/AllProducts";
 
 const Signup = lazy(() => import('../components/authPages/Signup'))
 
@@ -40,6 +41,14 @@ const routes = [
     element: (
       <ProtectedRoute>
         <ViewProduct />
+      </ProtectedRoute>
+    )
+  },
+  {
+    path: "/products",
+    element: (
+      <ProtectedRoute>
+        <AllProducts />
       </ProtectedRoute>
     )
   },

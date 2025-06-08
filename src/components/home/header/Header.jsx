@@ -1,14 +1,17 @@
 import React from 'react';
 import Cookies from 'js-cookie';
 import { IoCartOutline } from "react-icons/io5";
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default function Header() {
     const cookie = Cookies.get("jwt");
+    const navigate = useNavigate()
 
     return (
         <header className="bg-white shadow-md rounded-full mt-2">
             <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between ">
-                <div >
+                <div onClick={()=>navigate("/")} className='cursor-pointer'>
                     <img
                         src="https://nigammishra.github.io/Grocery-react/static/media/Grocerylogo.f1c1c78ea85df17396c7.png"
                         alt="Fresh Cart Logo"
@@ -25,9 +28,9 @@ export default function Header() {
                 </div>
 
                 <nav className="flex items-center space-x-6 text-sm font-medium text-gray-700">
-                    <span className="hover:text-green-600 cursor-pointer">Home</span>
-                    <span className="hover:text-green-600 cursor-pointer">All Category</span>
-                    <span className="hover:text-green-600 cursor-pointer">My Orders</span>
+                    <Link to="/" className="hover:text-green-600 cursor-pointer">Home</Link>
+                    <Link to="/products" className="hover:text-green-600 cursor-pointer">All Products</Link>
+                    <Link className="hover:text-green-600 cursor-pointer">My Orders</Link>
                     <div className="relative cursor-pointer">
                     <div>
                         <IoCartOutline className="text-2xl hover:text-green-600" />

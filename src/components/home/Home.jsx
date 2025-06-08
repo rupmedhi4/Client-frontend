@@ -1,36 +1,25 @@
 import React, { useEffect } from 'react'
-import Header from './header/Header'
 import ImageSlider from './ImageSlider/ImageSlider'
 import Category from './Category/Category';
-import RandomProducts from './randomProducts/RandomProducts.jsx';
-import Footer from '../Footer/Footer.jsx';
-import { useDispatch } from 'react-redux';
-import { getAllProducts } from '../../slices/productsSlice.js';
-import { toast } from 'react-toastify';
+import {  useSelector } from 'react-redux';
+import ShowProducts from './showProducts/ShowProducts.jsx';
 
 export default function Home() {
-    const dispatch = useDispatch()
+  const { allCreateProducts } = useSelector((state) => state.product);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const res = await dispatch(getAllProducts())
-        if (res.type !== "product/getAllProducts/fulfilled") {
-          toast.error("Something went wrong in fetching data try again...");
-        }
-      } catch (error) {
-        toast.error("Something went wrong in fetching data try again...");
-        console.log(error);
-      }
-    }
-    fetchProducts()
-  }, [])
+  
+
+  const getRandomProducts = (arr) => {
+    const shuffled = [...arr].sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, 10);
+  };
+  const randomProducts = getRandomProducts(allCreateProducts || []);
 
   return (
     <div>
-      <ImageSlider/>
-      <Category/>
-      <RandomProducts/>
+      <ImageSlider />
+      <Category />
+      <ShowProducts products={randomProducts} title={"Discover Our Products"}/>
     </div>
   )
 }
