@@ -1,24 +1,32 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCurrentProductId } from '../../../slices/productsSlice';
+import { useNavigate } from 'react-router-dom';
 
 export default function RandomProducts() {
   const { allCreateProducts } = useSelector((state) => state.product);
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const getRandomProducts = (arr) => {
     const shuffled = [...arr].sort(() => Math.random() - 0.5);
     return shuffled.slice(0, 10);
   };
-
   const randomProducts = getRandomProducts(allCreateProducts || []);
 
+  const selectProductHandler =(id)=>{
+    navigate(`/home/product/${id}`)
+  }
+
   return (
-    <div className="py-12 px-4 max-w-7xl mx-auto bg-gray-50">
+    <div className="py-12 px-4 max-w-7xl mx-auto bg-gray-50" >
       <h2 className="text-3xl font-extrabold text-gray-800 text-center mb-8 tracking-tight">
         Discover Our Products
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
         {randomProducts.map((product) => (
           <div
+          onClick={()=>selectProductHandler(product._id)}
             key={product._id}
             className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-lg transition-all duration-300 group cursor-pointer"
           >

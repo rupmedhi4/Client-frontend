@@ -4,6 +4,7 @@ import Login from '../components/authPages/Login'
 import Home from '../components/home/Home'
 import LoadingScreen from "../components/LoadingScreen/LoadingScreen";
 import ProtectedRoute from "./ProtectedRoute";
+import ViewProduct from "../components/ViewProduct/ViewProduct";
 
 const Signup = lazy(() => import('../components/authPages/Signup'))
 
@@ -35,10 +36,10 @@ const routes = [
     )
   },
   {
-    path: "/home/product",
+    path: "/home/product/:id",
     element: (
       <ProtectedRoute>
-        <Home />
+        <ViewProduct />
       </ProtectedRoute>
     )
   },
