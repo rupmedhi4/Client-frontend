@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getSingleProduct } from '../../slices/productsSlice';
@@ -10,10 +10,12 @@ export default function ViewProduct() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const [product, setProduct] = useState(null);
-  const { loading, allCreateProducts } = useSelector((state) => state.product);
+  const [loading, setLoading] = useState(false);
+  const {  allCreateProducts } = useSelector((state) => state.product);
 
   useEffect(() => {
     const fetchProduct = async () => {
+      setLoading(true)
       try {
         const res = await dispatch(getSingleProduct(id));
         if (res.type === 'product/getSingleProduct/rejected') {
@@ -22,27 +24,34 @@ export default function ViewProduct() {
         } else {
           setProduct(res.payload);
         }
+        setLoading(false)
       } catch (error) {
         console.error('Error fetching product:', error);
         toast.error('Error in fetching data');
+        setLoading(false)
       }
     };
     fetchProduct();
   }, [id]);
 
-  let filteredData = (product && product.category && allCreateProducts.length > 0)
-    ? allCreateProducts.filter((item) => item.category === product.category)
-    : [];
+  const getFilteredData = (arr) => {
+    let filteredData = (product && product.category && arr.length > 0)
+      ? arr.filter((item) => item.category === product.category)
+      : [];
+    return filteredData.slice(0, 12)
+  }
 
-  filteredData = filteredData.slice(0, 12)
+  const data = useMemo(()=>{
+    return getFilteredData(allCreateProducts || [])
+  },[product,allCreateProducts])
 
-  if (loading) return <LoadingScreen />;
+  if(loading)return <LoadingScreen/>
   if (!product) return <div className="text-center text-red-500 mt-10">Product not found</div>;
 
   return (
     <>
       <div className="container mx-auto pt-4 px-4 sm:px-6 lg:px-8 py-6 min-h-screen bg-gray-100">
-        
+
 
         <div className="flex flex-col lg:flex-row gap-6">
           <div className="lg:w-2/5 bg-white rounded-lg shadow-md p-6">
@@ -101,7 +110,7 @@ export default function ViewProduct() {
           </div>
         </div>
 
-      <ShowProducts products={filteredData} title={"Related Products"} />
+        <ShowProducts products={data} title={"Related Products"} />
       </div>
     </>
   );

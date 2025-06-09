@@ -1,14 +1,15 @@
 import React, { Suspense, lazy } from "react";
 import PublicRoute from "./PublicRoute";
 import Login from '../components/authPages/Login'
-import Home from '../components/home/Home'
 import LoadingScreen from "../components/LoadingScreen/LoadingScreen";
 import ProtectedRoute from "./ProtectedRoute";
-import ViewProduct from "../components/ViewProduct/ViewProduct";
 import AllProducts from "../components/AllProducts/AllProducts";
 import DetailsCategoryProducts from "../components/home/Category/DetailsCategoryProducts";
+import AddToCart from "../components/addToCart/AddToCart";
 
 const Signup = lazy(() => import('../components/authPages/Signup'))
+const Home = lazy(() => import('../components/home/Home'))
+const ViewProduct = lazy(() => import('../components/ViewProduct/ViewProduct'))
 
 const routes = [
   {
@@ -32,17 +33,17 @@ const routes = [
   {
     path: "/",
     element: (
-      <ProtectedRoute>
+        <Suspense fallback={<LoadingScreen />}>
         <Home />
-      </ProtectedRoute>
+      </Suspense>
     )
   },
   {
     path: "/home/product/:id",
     element: (
-      <ProtectedRoute>
+      <Suspense >
         <ViewProduct />
-      </ProtectedRoute>
+      </Suspense>
     )
   },
   {
@@ -61,6 +62,7 @@ const routes = [
       </ProtectedRoute>
     )
   },
+
 
 
 ];

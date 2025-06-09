@@ -1,10 +1,10 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { addToCart } from '../../../slices/productsSlice';
 import { toast } from 'react-toastify';
+import { addToCart } from '../../../slices/cartSlice';
 
-export default function ShowProducts({ products, title }) {
+const ShowProducts=({ products, title })=> {
   const navigate = useNavigate();
   const dispatch = useDispatch()
 
@@ -16,7 +16,7 @@ export default function ShowProducts({ products, title }) {
 
     try {
       const res = await dispatch(addToCart(id))
-      if (res.type === "product/addToCart/fulfilled") {
+      if (res.type === "cart/addToCart/fulfilled") {
         toast.success("Product Add successfully")
       } else if (res.payload.status === 400) {
         toast.error("Product already in cart")
@@ -74,3 +74,5 @@ export default function ShowProducts({ products, title }) {
     </div>
   );
 }
+
+export default React.memo(ShowProducts);

@@ -1,15 +1,20 @@
 import React from 'react';
 import Cookies from 'js-cookie';
 import { IoCartOutline } from "react-icons/io5";
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useNavigate, Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleCart } from '../../../slices/cartSlice';
 
 export default function Header() {
     const cookie = Cookies.get("jwt");
     const navigate = useNavigate()
-    const {addToCart}=useSelector(state=>state.product)
-console.log(addToCart);
+    const dispatch =useDispatch()
+
+    const {cartData}=useSelector(state=>state.cart)
+
+const viewCartHandler =()=>{
+    dispatch(toggleCart())
+}
 
     return (
         <header className="bg-white shadow-md rounded-full mt-2">
@@ -35,9 +40,11 @@ console.log(addToCart);
                     <Link to="/products" className="hover:text-green-600 cursor-pointer">All Products</Link>
                     <Link className="hover:text-green-600 cursor-pointer">My Orders</Link>
                     <div className="relative cursor-pointer">
-                    <div>
-                        <IoCartOutline className="text-2xl hover:text-green-600" />
-                        <span className="absolute -top-2 -right-2 text-xs bg-red-500 text-white rounded-full px-1">{addToCart.length > 0 ? addToCart.length : 0 }</span>
+                    <div onClick={viewCartHandler} >
+                       
+                         <IoCartOutline className="text-2xl hover:text-green-600" />
+                        <span className="absolute -top-2 -right-2 text-xs bg-red-500 text-white rounded-full px-1">{cartData.length > 0 ? cartData.length : 0 }</span>
+                     
                     </div>
                     </div>
                     {
