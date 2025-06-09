@@ -7,7 +7,7 @@ export const apiAgent = {
   getProducts :`${base_url}/product/get`,
   getSingleProduct :`${base_url}/product/get/single`,
   addToCart :`${base_url}/client/add-to-cart`,
-  getAddToCart :`${base_url}/client/get/add-to-cart`
-
+  getAddToCart :`${base_url}/client/get/add-to-cart`,
+  removeAddToCart :`${base_url}/client/delete/add-to-cart`
 
 };

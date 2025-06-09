@@ -33,17 +33,21 @@ const routes = [
   {
     path: "/",
     element: (
+      <ProtectedRoute>
         <Suspense fallback={<LoadingScreen />}>
-        <Home />
-      </Suspense>
+          <Home />
+        </Suspense>
+      </ProtectedRoute>
     )
   },
   {
     path: "/home/product/:id",
     element: (
-      <Suspense >
-        <ViewProduct />
-      </Suspense>
+      <ProtectedRoute>
+        <Suspense >
+          <ViewProduct />
+        </Suspense>
+      </ProtectedRoute>
     )
   },
   {

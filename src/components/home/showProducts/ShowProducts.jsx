@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { addToCart } from '../../../slices/cartSlice';
+import { addToCart,fetchAddToCart } from '../../../slices/cartSlice';
 
 const ShowProducts=({ products, title })=> {
   const navigate = useNavigate();
@@ -18,6 +18,7 @@ const ShowProducts=({ products, title })=> {
       const res = await dispatch(addToCart(id))
       if (res.type === "cart/addToCart/fulfilled") {
         toast.success("Product Add successfully")
+         await dispatch(fetchAddToCart());
       } else if (res.payload.status === 400) {
         toast.error("Product already in cart")
       } else {

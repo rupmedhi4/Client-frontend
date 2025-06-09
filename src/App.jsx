@@ -4,7 +4,7 @@ import routes from './routesHandler/routes';
 import Header from './components/home/header/Header';
 import Footer from './components/Footer/Footer';
 import { useDispatch, useSelector } from 'react-redux';
-import {  getAllProducts } from './slices/productsSlice';
+import { getAllProducts } from './slices/productsSlice';
 import { toast } from 'react-toastify';
 import { fetchAddToCart } from './slices/cartSlice';
 import Modal from './components/Modal/Modal';
@@ -12,20 +12,16 @@ import AddToCart from './components/addToCart/AddToCart';
 
 export default function App() {
   const dispatch = useDispatch()
-const {isCartOpen}=useSelector((state)=>state.cart)
+  const { isCartOpen,cartData } = useSelector((state) => state.cart)
+  const { isLogin } = useSelector((state) => state.auth)
+
 
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
-        const productRes = await dispatch(getAllProducts());
-        if (productRes.type !== "product/getAllProducts/fulfilled") {
-          toast.error("Something went wrong in fetching products");
-        }
+        await dispatch(getAllProducts());
+        await dispatch(fetchAddToCart());
 
-        const cartRes = await dispatch(fetchAddToCart());
-        if (cartRes.type !== "cart/fetchAddToCart/fulfilled") {
-          toast.error("Something went wrong in fetching cart data");
-        }
       } catch (error) {
         toast.error("Something went wrong");
         console.log(error);
@@ -33,7 +29,7 @@ const {isCartOpen}=useSelector((state)=>state.cart)
     };
 
     fetchInitialData();
-  }, []);
+  }, [isLogin]);
 
 
   return (
@@ -41,10 +37,10 @@ const {isCartOpen}=useSelector((state)=>state.cart)
       <Router>
         <Header />
         {
-          isCartOpen && 
-                    <Modal>
-                      <AddToCart/>
-                    </Modal>
+          isCartOpen &&
+          <Modal>
+            <AddToCart />
+          </Modal>
         }
         <main className="flex-grow">
           <Routes>

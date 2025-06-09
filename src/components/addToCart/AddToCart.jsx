@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { toggleCart } from '../../slices/cartSlice'
+import { deleteAddToCart, toggleCart } from '../../slices/cartSlice'
 
 export default function AddToCart() {
   const dispatch = useDispatch()
@@ -22,8 +22,8 @@ export default function AddToCart() {
         <span className="w-1/4 text-center">Price</span>
       </div>
 
-      {cartData.map((item) => (
-        <div key={item._id} className='flex items-center justify-between py-4 border-b'>
+      {cartData.map((item,index) => (
+        <div key={item._id || index} className='flex items-center justify-between py-4 border-b'>
 
           <div className="flex flex-col w-1/2">
             <div className='flex items-center gap-3 cursor-pointer'>
@@ -34,10 +34,13 @@ export default function AddToCart() {
               />
               <span className="text-sm font-medium">{item.name}</span>
             </div>
-            <div className='flex gap-4 mt-2'>
-              <button className="bg-blue-600 text-white px-2 py-1 rounded hover:bg-blue-700 transition">
+            <div className='flex gap-4 mt-2 '>
+              <button 
+                  className="bg-blue-600 text-white px-2 py-1 rounded hover:bg-blue-700 transition cursor-pointer "
+                  onClick={() =>dispatch(deleteAddToCart(item._id))}
+              >
                 Remove</button>
-              <button className="bg-yellow-600 text-white px-2 py-1 rounded hover:bg-yellow-700 transition">
+              <button className="bg-yellow-600 text-white px-2 py-1 rounded hover:bg-yellow-700 transition cursor-pointer">
 
                 Order
               </button>

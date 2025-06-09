@@ -33,6 +33,24 @@ export const fetchAddToCart = createAsyncThunk(
   }
 );
 
+export const deleteAddToCart = createAsyncThunk(
+  'cart/deleteAddToCart',
+  async (id, { rejectWithValue }) => {
+    try {
+      const res = await axios.delete(
+        `${apiAgent.removeAddToCart}/${id}`, {
+        withCredentials: true,
+      });
+      console.log(res);
+      
+      return res.data.cart
+    } catch (error) {
+      console.error("Error deleting add to cart data:", error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
 const cartSlice = createSlice({
   name: 'cart',
   initialState: {
@@ -75,6 +93,19 @@ const cartSlice = createSlice({
         state.cartData=action.payload
       })
       .addCase(fetchAddToCart.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      //deleteAddToCart
+      .addCase(deleteAddToCart.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteAddToCart.fulfilled, (state, action) => {
+        state.loading = false;        
+        state.cartData=action.payload
+      })
+      .addCase(deleteAddToCart.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });
