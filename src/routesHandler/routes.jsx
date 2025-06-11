@@ -6,6 +6,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import AllProducts from "../components/AllProducts/AllProducts";
 import DetailsCategoryProducts from "../components/home/Category/DetailsCategoryProducts";
 import AddToCart from "../components/addToCart/AddToCart";
+import CheckOutCart from "../components/checkOutCart/CheckOutCart";
 
 const Signup = lazy(() => import('../components/authPages/Signup'))
 const Home = lazy(() => import('../components/home/Home'))
@@ -63,6 +64,14 @@ const routes = [
     element: (
       <ProtectedRoute>
         <DetailsCategoryProducts />
+      </ProtectedRoute>
+    )
+  },
+  {
+    path: "/home/product/order/:id",
+    element: (
+      <ProtectedRoute>
+        <CheckOutCart />
       </ProtectedRoute>
     )
   },

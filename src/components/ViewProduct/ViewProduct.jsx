@@ -1,17 +1,20 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getSingleProduct } from '../../slices/productsSlice';
 import { toast } from 'react-toastify';
 import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import ShowProducts from './../home/showProducts/ShowProducts';
+import { addToCart } from '../../slices/cartSlice';
 
 export default function ViewProduct() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(false);
-  const {  allCreateProducts } = useSelector((state) => state.product);
+  const navigate = useNavigate()
+
+  const { allCreateProducts } = useSelector((state) => state.product);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -41,11 +44,32 @@ export default function ViewProduct() {
     return filteredData.slice(0, 12)
   }
 
-  const data = useMemo(()=>{
+  const data = useMemo(() => {
     return getFilteredData(allCreateProducts || [])
-  },[product,allCreateProducts])
+  }, [product, allCreateProducts])
 
-  if(loading)return <LoadingScreen/>
+
+  const addToCartHandler = async () => {
+    try {
+      const res = await dispatch(addToCart(id))
+      if (res.type === "cart/addToCart/fulfilled") {
+        toast.success("Product Add successfully")
+        await dispatch(fetchAddToCart());
+      } else if (res.payload.status === 400) {
+        toast.error("Product already in cart")
+      } else {
+        toast.error("something went wrong")
+      }
+    } catch (error) {
+      toast.error("something went wrong")
+    }
+  }
+
+  const orderHandler =()=>{
+    navigate(`/home/product/order/${id}`)
+  }
+
+  if (loading) return <LoadingScreen />
   if (!product) return <div className="text-center text-red-500 mt-10">Product not found</div>;
 
   return (
@@ -62,10 +86,14 @@ export default function ViewProduct() {
               onError={(e) => (e.target.src = 'https://via.placeholder.com/400?text=Product+Image')}
             />
             <div className="flex gap-2 mt-4">
-              <button className="flex-1 bg-yellow-500 text-white py-3 rounded-md hover:bg-yellow-600 transition-colors duration-200 font-medium text-sm sm:text-base">
+              <button
+                onClick={addToCartHandler}
+                className="flex-1 bg-yellow-500 text-white py-3 rounded-md hover:bg-yellow-600 transition-colors duration-200 font-medium text-sm sm:text-base">
                 Add to Cart
               </button>
-              <button className="flex-1 bg-orange-500 text-white py-3 rounded-md hover:bg-orange-600 transition-colors duration-200 font-medium text-sm sm:text-base">
+              <button 
+              onClick={orderHandler}
+              className="flex-1 bg-orange-500 text-white py-3 rounded-md hover:bg-orange-600 transition-colors duration-200 font-medium text-sm sm:text-base">
                 Buy Now
               </button>
             </div>

@@ -49,6 +49,21 @@ export const loginUser = createAsyncThunk(
   }
 )
 
+export const fetchUserData = createAsyncThunk(
+  'auth/fetchUserData',
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await axios.get(`${apiAgent.getUser}`, {
+        withCredentials: true
+      });
+      return res.data.user;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response?.data?.message || error.message);
+    }
+  }
+);
+
 const authSlice = createSlice({
   name: 'authentication',
   initialState: {
@@ -58,7 +73,7 @@ const authSlice = createSlice({
     error: null
   },
   reducers: {
-
+   
   },
 
   extraReducers: (builder) => {
@@ -70,11 +85,6 @@ const authSlice = createSlice({
       .addCase(signupUser.fulfilled, (state, action) => {
         state.loading = false;
         state.isLogin = true;
-        state.user = {
-          name: action.payload.user.name,
-          email: action.payload.user.email,
-          userId: action.payload.user._id
-        }
       })
       .addCase(signupUser.rejected, (state, action) => {
         state.loading = false;
@@ -88,13 +98,21 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.isLogin = true;
-        state.loading = false,
-          state.user = {
-            name: action.payload.user.name,
-            email: action.payload.user.email,
-          }
+        state.loading = false;
       })
       .addCase(loginUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      //fetchUserData
+      .addCase(fetchUserData.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(fetchUserData.fulfilled, (state, action) => {
+        state.user = action.payload;
+        
+      })
+      .addCase(fetchUserData.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
@@ -103,5 +121,5 @@ const authSlice = createSlice({
 
 });
 
-export const { } = authSlice.actions;
+export const {setUser } = authSlice.actions;
 export default authSlice.reducer;

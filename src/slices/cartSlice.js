@@ -1,13 +1,14 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { apiAgent } from '../apiAgent';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 
 export const addToCart = createAsyncThunk(
   'cart/addToCart',
   async (id, { rejectWithValue }) => {
     try {
-      const res = await axios.post(`${apiAgent.addToCart}/${id}`,{}, {
+      const res = await axios.post(`${apiAgent.addToCart}/${id}`, {}, {
         withCredentials: true,
       });
       return res;
@@ -41,8 +42,7 @@ export const deleteAddToCart = createAsyncThunk(
         `${apiAgent.removeAddToCart}/${id}`, {
         withCredentials: true,
       });
-      console.log(res);
-      
+
       return res.data.cart
     } catch (error) {
       console.error("Error deleting add to cart data:", error);
@@ -56,7 +56,7 @@ const cartSlice = createSlice({
   initialState: {
     loading: false,
     error: null,
-    cartData:[],
+    cartData: [],
     isCartOpen: false
   },
   reducers: {
@@ -69,7 +69,7 @@ const cartSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-     
+
       //addToCart
       .addCase(addToCart.pending, (state) => {
         state.loading = true;
@@ -77,7 +77,7 @@ const cartSlice = createSlice({
       })
       .addCase(addToCart.fulfilled, (state, action) => {
         state.loading = false;
-        state.cartData=action.payload.data.user.addToCart
+        state.cartData = action.payload.data.user.addToCart
       })
       .addCase(addToCart.rejected, (state, action) => {
         state.loading = false;
@@ -89,8 +89,8 @@ const cartSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchAddToCart.fulfilled, (state, action) => {
-        state.loading = false;        
-        state.cartData=action.payload
+        state.loading = false;
+        state.cartData = action.payload
       })
       .addCase(fetchAddToCart.rejected, (state, action) => {
         state.loading = false;
@@ -102,12 +102,15 @@ const cartSlice = createSlice({
         state.error = null;
       })
       .addCase(deleteAddToCart.fulfilled, (state, action) => {
-        state.loading = false;        
-        state.cartData=action.payload
+        state.loading = false;
+        state.cartData = action.payload
+        toast.success("Remove products successfully")
       })
       .addCase(deleteAddToCart.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+        toast.success("error in remove product")
+
       });
   },
 });

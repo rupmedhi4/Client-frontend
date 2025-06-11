@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import { fetchAddToCart } from './slices/cartSlice';
 import Modal from './components/Modal/Modal';
 import AddToCart from './components/addToCart/AddToCart';
+import { fetchUserData } from './slices/authSlice';
 
 export default function App() {
   const dispatch = useDispatch()
@@ -21,7 +22,7 @@ export default function App() {
       try {
         await dispatch(getAllProducts());
         await dispatch(fetchAddToCart());
-
+        await dispatch(fetchUserData());
       } catch (error) {
         toast.error("Something went wrong");
         console.log(error);
