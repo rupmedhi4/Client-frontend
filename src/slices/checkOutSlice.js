@@ -12,7 +12,25 @@ export const addAddress = createAsyncThunk(
             const res = await axios.post(`${apiAgent.setAddress}`, address, {
                 withCredentials: true
             });
+            console.log(res);
+
             return res.data
+        } catch (error) {
+            console.log(error);
+            return rejectWithValue(error.response?.data?.message || error.message);
+        }
+    }
+);
+export const placedOrder = createAsyncThunk(
+    'auth/placedOrder',
+    async ({ orderDetails, id }, { rejectWithValue }) => {
+        try {
+            const res = await axios.post(`${apiAgent.createOrder}/${id}`, orderDetails, {
+                withCredentials: true
+            });
+            console.log(res);
+
+            return res
         } catch (error) {
             console.log(error);
             return rejectWithValue(error.response?.data?.message || error.message);
@@ -23,28 +41,39 @@ export const addAddress = createAsyncThunk(
 const checkOutSlice = createSlice({
     name: 'checkOutSlice',
     initialState: {
-        selectedAddress:"",
-        confirmDelivery:false,
-        orderProduct : null,
+        selectedAddress: "",
+        confirmDelivery: false,
+        orderProduct: null,
         isAddressFormOpen: false,
-        totalOrderQuantity:1,
+        totalOrderQuantity: 1,
+        paymentOption: false,
         loading: false,
         error: null
     },
-    reducers: { 
-        setSelectedAddress: (state,action) => {
-            state.selectedAddress = action.payload            
+    reducers: {
+        setSelectedAddress: (state, action) => {
+            state.selectedAddress = action.payload
         },
         setConfirmDelivery: (state) => {
-            state.confirmDelivery = true            
+            state.confirmDelivery = !state.confirmDelivery
         },
         setIsAddressFormOpen: (state) => {
             state.isAddressFormOpen = !state.isAddressFormOpen;
         },
-        setOrderProduct: (state,action) =>{
-            const {orderedProduct,quantity}=action.payload
+        setPaymentOption: (state) => {
+            state.paymentOption = !state.paymentOption
+        },
+        setOrderProduct: (state, action) => {
+            const { orderedProduct, quantity } = action.payload
             state.orderProduct = orderedProduct,
-            state.totalOrderQuantity = quantity
+                state.totalOrderQuantity = quantity
+        },
+        setClearOrderData: (state) => {
+            state.orderProduct = null,
+            state.totalOrderQuantity = 0,
+            state.confirmDelivery=!state.confirmDelivery,
+            state.paymentOption = !state.paymentOption
+
         }
     },
 
@@ -57,18 +86,32 @@ const checkOutSlice = createSlice({
             })
             .addCase(addAddress.fulfilled, (state, action) => {
                 state.loading = false,
-                toast.success("Address add successfully")
+                    toast.success("Address add successfully")
 
             })
             .addCase(addAddress.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
-                 toast.error("Error in add Address")
+                toast.error("Error in add Address")
+            })
+            //placedOrder
+            .addCase(placedOrder.pending, (state) => {
+                state.loading = true
+            })
+            .addCase(placedOrder.fulfilled, (state, action) => {
+                state.loading = false,
+                    toast.success("Order placed successfully")
+
+            })
+            .addCase(placedOrder.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+                toast.error("Error in placed Order ")
             })
 
     }
 
 });
 
-export const {setSelectedAddress, setConfirmDelivery, setIsAddressFormOpen,setOrderProduct } = checkOutSlice.actions;
+export const { setClearOrderData, setSelectedAddress, setConfirmDelivery, setIsAddressFormOpen, setOrderProduct, setPaymentOption } = checkOutSlice.actions;
 export default checkOutSlice.reducer;

@@ -17,11 +17,12 @@ export default function AddAddress() {
                 <>
                     {
                         isAddressFormOpen ?
+                        
                             <AddressForm />
                             :
                             <button
                                 onClick={addressHandler}
-                                className="text-white  text-sm font-bold mt-2 px-4 hover:underline cursor-pointer"
+                                className="text-blue  text-sm font-bold mt-2 px-4 hover:underline cursor-pointer"
                             >
                                 + Add a new address
                             </button>

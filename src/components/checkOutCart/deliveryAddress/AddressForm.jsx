@@ -41,10 +41,12 @@ export default function AddressForm() {
     };
 
     try {
-      await dispatch(addAddress(userAddress));
+      const res =await dispatch(addAddress(userAddress));
+      console.log(res);
+      
+
       await dispatch(fetchUserData());
       dispatch(setIsAddressFormOpen());
-      toast.success("Address added successfully!");
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong!");
@@ -52,7 +54,7 @@ export default function AddressForm() {
   };
 
   return (
-    <div className="bg-white rounded-md p-6 w-full max-w-lg mx-auto shadow-lg">
+    <div className="bg-white rounded-md p-6 w-5/5 max-w-lg  shadow-lg">
       <h2 className="text-lg font-semibold text-gray-800 mb-4">Add New Address</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Name & Phone */}

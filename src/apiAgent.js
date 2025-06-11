@@ -10,6 +10,7 @@ export const apiAgent = {
   addToCart :`${base_url}/client/add-to-cart`,
   getAddToCart :`${base_url}/client/get/add-to-cart`,
   removeAddToCart :`${base_url}/client/delete/add-to-cart`,
-  setAddress :`${base_url}/client/address/set`
+  setAddress :`${base_url}/client/address/set`,
+  createOrder :`${base_url}/client/order/placed`
 
 };
