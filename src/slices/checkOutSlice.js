@@ -37,10 +37,26 @@ export const placedOrder = createAsyncThunk(
         }
     }
 );
+export const getOrders = createAsyncThunk(
+    'auth/getOrders',
+    async (_, { rejectWithValue }) => {
+        try {
+            const res = await axios.get(apiAgent.fetchOrdered, {
+                withCredentials: true
+            });
+            return res.data
+        } catch (error) {
+            console.log(error);
+            return rejectWithValue(error.response?.data?.message || error.message);
+        }
+    }
+);
+
 
 const checkOutSlice = createSlice({
     name: 'checkOutSlice',
     initialState: {
+        totalOrderedProducts: null,
         selectedAddress: "",
         confirmDelivery: false,
         orderProduct: null,
@@ -70,9 +86,9 @@ const checkOutSlice = createSlice({
         },
         setClearOrderData: (state) => {
             state.orderProduct = null,
-            state.totalOrderQuantity = 0,
-            state.confirmDelivery=!state.confirmDelivery,
-            state.paymentOption = !state.paymentOption
+                state.totalOrderQuantity = 0,
+                state.confirmDelivery = !state.confirmDelivery,
+                state.paymentOption = !state.paymentOption
 
         }
     },
@@ -107,6 +123,20 @@ const checkOutSlice = createSlice({
                 state.loading = false;
                 state.error = action.payload;
                 toast.error("Error in placed Order ")
+            })
+            //getOrders
+            .addCase(getOrders.pending, (state) => {
+                state.loading = true
+            })
+            .addCase(getOrders.fulfilled, (state, action) => {
+                state.loading = false,
+                state.totalOrderedProducts = action.payload
+            })
+            .addCase(getOrders.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+                toast.error("Error fetching orders")
+
             })
 
     }

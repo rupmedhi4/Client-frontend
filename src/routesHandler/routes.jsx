@@ -7,6 +7,7 @@ import AllProducts from "../components/AllProducts/AllProducts";
 import DetailsCategoryProducts from "../components/home/Category/DetailsCategoryProducts";
 import AddToCart from "../components/addToCart/AddToCart";
 import CheckOutCart from "../components/checkOutCart/CheckOutCart";
+import ViewOrders from "../components/viewOrders/ViewOrders";
 
 const Signup = lazy(() => import('../components/authPages/Signup'))
 const Home = lazy(() => import('../components/home/Home'))
@@ -72,6 +73,14 @@ const routes = [
     element: (
       <ProtectedRoute>
         <CheckOutCart />
+      </ProtectedRoute>
+    )
+  },
+  {
+    path: "/product/orders/view",
+    element: (
+      <ProtectedRoute>
+        <ViewOrders />
       </ProtectedRoute>
     )
   },

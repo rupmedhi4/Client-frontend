@@ -2,6 +2,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { apiAgent } from '../apiAgent';
+import { toast } from 'react-toastify';
 
 
 
@@ -49,6 +50,23 @@ export const loginUser = createAsyncThunk(
   }
 )
 
+
+export const logout = createAsyncThunk(
+  'auth/logout',
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await axios.post(apiAgent.logOut,{}, {
+        withCredentials: true
+      }
+    );
+      return res.data;
+    } catch (error) {
+      console.error(error); 
+      return rejectWithValue(error.response?.data || error.message); 
+    }
+  }
+);
+
 export const fetchUserData = createAsyncThunk(
   'auth/fetchUserData',
   async (_, { rejectWithValue }) => {
@@ -56,6 +74,7 @@ export const fetchUserData = createAsyncThunk(
       const res = await axios.get(`${apiAgent.getUser}`, {
         withCredentials: true
       });
+      console.log(res.data.user)
       return res.data.user;
     } catch (error) {
       console.log(error);
@@ -73,7 +92,7 @@ const authSlice = createSlice({
     error: null
   },
   reducers: {
-   
+
   },
 
   extraReducers: (builder) => {
@@ -110,16 +129,30 @@ const authSlice = createSlice({
       })
       .addCase(fetchUserData.fulfilled, (state, action) => {
         state.user = action.payload;
-        
+
       })
       .addCase(fetchUserData.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      //logout
+      .addCase(logout.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(logout.fulfilled, (state, action) => {
+        state.loading = false
+        toast.success("Logout successful")
+      })
+      .addCase(logout.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        toast.error("'Logout failed:'")
+
       })
 
   }
 
 });
 
-export const {setUser } = authSlice.actions;
+export const { setUser } = authSlice.actions;
 export default authSlice.reducer;

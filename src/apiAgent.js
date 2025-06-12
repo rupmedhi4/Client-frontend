@@ -3,6 +3,7 @@ const base_url = "http://localhost:4000";
 export const apiAgent = {
   signup: `${base_url}/auth/client/user/signup`,
   login: `${base_url}/auth/client/user/login`,
+  logOut: `${base_url}/auth/user/logout`,
   getUser : `${base_url}/auth/client/user/data`,
   logout : `${base_url}/auth/user/logout`,
   getProducts :`${base_url}/product/get`,
@@ -11,6 +12,7 @@ export const apiAgent = {
   getAddToCart :`${base_url}/client/get/add-to-cart`,
   removeAddToCart :`${base_url}/client/delete/add-to-cart`,
   setAddress :`${base_url}/client/address/set`,
-  createOrder :`${base_url}/client/order/placed`
+  createOrder :`${base_url}/client/order/placed`,
+  fetchOrdered :`${base_url}/client/order/get`
 
-};
+}
