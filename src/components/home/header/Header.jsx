@@ -7,7 +7,7 @@ import { toggleCart } from '../../../slices/cartSlice';
 import { loginUser, logout } from '../../../slices/authSlice';
 import { toast } from 'react-toastify';
 
-export default function Header() {
+export default function Header({ searchTerm, setSearchTerm }) {
     const cookie = Cookies.get("jwt");
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -16,13 +16,15 @@ export default function Header() {
 
     const viewCartHandler = () => {
         dispatch(toggleCart())
+        setSearchTerm("")
+
     }
 
     const logoutHandler = async () => {
         try {
             const res = await dispatch(logout());
             console.log(res);
-
+            setSearchTerm("")
             navigate('/login');
         } catch (error) {
             console.error('Logout failed:', error);
@@ -31,7 +33,7 @@ export default function Header() {
     };
 
     return (
-        <header className="bg-white shadow-md rounded-full mt-2">
+        <header className="bg-white shadow-md rounded-full mt-2 sticky top-0 z-50">
             <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between ">
                 <div onClick={() => navigate("/")} className='cursor-pointer'>
                     <img
@@ -45,6 +47,8 @@ export default function Header() {
                     <input
                         type="text"
                         placeholder="Type to search..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
                         className="w-full px-4 py-2  border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 rounded-full"
                     />
                 </div>
@@ -53,9 +57,9 @@ export default function Header() {
                     {
                         cookie &&
                         <>
-                            <Link to="/" className="hover:text-green-600 cursor-pointer">Home</Link>
-                            <Link to="/products" className="hover:text-green-600 cursor-pointer">All Products</Link>
-                            <Link to="/product/orders/view" className="hover:text-green-600 cursor-pointer">My Orders</Link>
+                            <Link to="/" onClick={()=>setSearchTerm("")} className="hover:text-green-600 cursor-pointer">Home</Link>
+                            <Link to="/products" onClick={()=>setSearchTerm("")} className="hover:text-green-600 cursor-pointer">All Products</Link>
+                            <Link to="/product/orders/view" onClick={()=>setSearchTerm("")} className="hover:text-green-600 cursor-pointer">My Orders</Link>
                             <div className="relative cursor-pointer">
                                 <div onClick={viewCartHandler} >
 

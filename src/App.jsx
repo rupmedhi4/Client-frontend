@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import routes from './routesHandler/routes';
 import Header from './components/home/header/Header';
@@ -10,11 +10,20 @@ import { fetchAddToCart } from './slices/cartSlice';
 import Modal from './components/Modal/Modal';
 import AddToCart from './components/addToCart/AddToCart';
 import { fetchUserData } from './slices/authSlice';
+import SearchResults from './components/SearchResults/SearchResults';
 
 export default function App() {
   const dispatch = useDispatch()
-  const { isCartOpen,cartData } = useSelector((state) => state.cart)
+  const { isCartOpen, cartData } = useSelector((state) => state.cart)
   const { isLogin } = useSelector((state) => state.auth)
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const { allCreateProducts } = useSelector((state) => state.product);
+
+  const filteredProducts = allCreateProducts.filter(p =>
+    p.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
 
 
   useEffect(() => {
@@ -36,13 +45,17 @@ export default function App() {
   return (
     <div className="min-h-screen flex flex-col">
       <Router>
-        <Header />
+        <Header searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
         {
           isCartOpen &&
           <Modal>
             <AddToCart />
           </Modal>
         }
+       {
+        searchTerm && <SearchResults products={filteredProducts} setSearchTerm={setSearchTerm}/>
+       }
+
         <main className="flex-grow">
           <Routes>
             {routes.map(({ path, element }) => (

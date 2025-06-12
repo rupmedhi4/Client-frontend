@@ -5,7 +5,7 @@ import { getSingleProduct } from '../../slices/productsSlice';
 import { toast } from 'react-toastify';
 import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import ShowProducts from './../home/showProducts/ShowProducts';
-import { addToCart } from '../../slices/cartSlice';
+import { addToCart, fetchAddToCart } from '../../slices/cartSlice';
 
 export default function ViewProduct() {
   const { id } = useParams();
@@ -57,10 +57,10 @@ export default function ViewProduct() {
         await dispatch(fetchAddToCart());
       } else if (res.payload.status === 400) {
         toast.error("Product already in cart")
-      } else {
-        toast.error("something went wrong")
-      }
+      } 
     } catch (error) {
+      console.log(error);
+      
       toast.error("something went wrong")
     }
   }

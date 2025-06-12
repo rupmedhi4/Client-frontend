@@ -1,11 +1,18 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteAddToCart, toggleCart } from '../../slices/cartSlice'
+import { useNavigate } from 'react-router-dom'
 
 export default function AddToCart() {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const { cartData } = useSelector(state => state.cart)
   const total = cartData.reduce((acc, item) => acc + parseInt(item.price), 0)
+
+const orderHandler =(id)=>{
+  navigate(`/home/product/order/${id}`)
+  dispatch(toggleCart())
+}
 
   return (
     <div className="fixed top-0  right-0 h-full w-full sm:w-[400px] bg-white shadow-lg p-4 overflow-y-auto">
@@ -40,7 +47,9 @@ export default function AddToCart() {
                   onClick={() =>dispatch(deleteAddToCart(item._id))}
               >
                 Remove</button>
-              <button className="bg-yellow-600 text-white px-2 py-1 rounded hover:bg-yellow-700 transition cursor-pointer">
+              <button 
+              onClick={()=>orderHandler(item._id)}
+              className="bg-yellow-600 text-white px-2 py-1 rounded hover:bg-yellow-700 transition cursor-pointer">
 
                 Order
               </button>

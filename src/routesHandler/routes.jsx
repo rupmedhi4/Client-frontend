@@ -11,7 +11,7 @@ import ViewOrders from "../components/viewOrders/ViewOrders";
 
 const Signup = lazy(() => import('../components/authPages/Signup'))
 const Home = lazy(() => import('../components/home/Home'))
-const ViewProduct = lazy(() => import('../components/ViewProduct/ViewProduct'))
+import ViewProduct from './../components/ViewProduct/ViewProduct';
 
 const routes = [
   {
@@ -46,9 +46,9 @@ const routes = [
     path: "/home/product/:id",
     element: (
       <ProtectedRoute>
-        <Suspense >
+       
           <ViewProduct />
-        </Suspense>
+       
       </ProtectedRoute>
     )
   },
