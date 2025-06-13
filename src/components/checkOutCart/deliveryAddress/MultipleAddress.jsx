@@ -38,12 +38,12 @@ export default function MultipleAddress() {
   return (
 
     <>
-      <div className="border border-gray-400 w-4/5 mt-8 bg-blue-500 py-4 px-4 rounded-md ">
+      <div className="border border-gray-400 w-full lg:w-4/5 mt-8  bg-blue-500 py-4 px-4 rounded-md mr-12 lg:mr-0 ">
         <span className="text-lg font-bold text-white uppercase">Delivery Address</span>
       </div>
         {
-          confirmDelivery ? <div className="w-4/5 border-l-4 border-green-600 bg-green-100 p-5 rounded-md shadow-md">
-            <h3 className=" w-4/5 text-lg font-semibold text-green-700 mb-2">Delivery Address Confirmed </h3>
+          confirmDelivery ? <div className=" px-4 w-full lg:w-4/5 border-l-4 border-green-600 bg-green-100 p-5 rounded-md shadow-md">
+            <h3 className=" lg:w-4/5 text-lg font-semibold text-green-700 mb-2">Delivery Address Confirmed </h3>
             <div className="text-sm text-gray-800 space-y-1 pl-5">
               <span className='font-bold'>{selectedAddress.name}</span>
               <p>{selectedAddress.street}, {selectedAddress.city}, {selectedAddress.state}</p>

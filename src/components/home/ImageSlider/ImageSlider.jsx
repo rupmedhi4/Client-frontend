@@ -14,25 +14,25 @@ export default function ImageSlider() {
         pagination={{ clickable: true }}
         autoplay={{ delay: 3000, disableOnInteraction: false }}
         modules={[Pagination, Navigation, Autoplay]}
-        className=" rounded-lg shadow-lg"
+        className=" sm:rounded-lg shadow-lg"
       >
         <SwiperSlide>
           <img
             src="/images/slider2.jpg"
             alt="Slide 1"
-            className="w-full max-h-[30rem] object-cover rounded-lg"
+            className="w-full max-h-[30rem] object-cover sm:rounded-lg"
           />
         </SwiperSlide>
         <SwiperSlide>
           <img
             src="/images/slider3.jpg" alt="Slide 2"
-            className="w-full max-h-[30rem] object-cover rounded-lg"
+            className="w-full max-h-[30rem] object-cover sm:rounded-lg"
           />
         </SwiperSlide>
         <SwiperSlide>
           <img
             src="/images/slider4.jpg" alt="Slide 3"
-            className="w-full max-h-[30rem] object-cover rounded-lg"
+            className="w-full max-h-[30rem] object-cover sm:rounded-lg"
           />
         </SwiperSlide>
       </Swiper>

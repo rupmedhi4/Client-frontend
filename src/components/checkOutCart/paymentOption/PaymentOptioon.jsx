@@ -33,7 +33,7 @@ export default function PaymentOption() {
 
     return (
         <>
-            <div className="w-4/5 border border-gray-400 mt-8 bg-blue-500 py-4 px-4 rounded-md shadow-md">
+            <div className=" w-full lg:w-4/5 border border-gray-400 mt-8 bg-blue-500 py-4 px-4 rounded-md shadow-md">
                 <span className="text-lg font-bold text-white uppercase">Payment Option</span>
             </div>
 

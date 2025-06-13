@@ -6,7 +6,7 @@ export default function PriceDetails() {
   const totalPrice = orderProduct?.price ? orderProduct.price * totalOrderQuantity : 0;
 
   return (
-    <div className="w-full md:w-[400px] bg-white rounded shadow p-4 ">
+    <div className=" lg:w-[400px] bg-white rounded shadow p-4 ">
       <h2 className="text-gray-600 text-sm font-semibold mb-3">PRICE DETAILS</h2>
       <div className="flex justify-between text-sm text-gray-800 mb-2">
         <span>{`Price (${totalOrderQuantity} item${totalOrderQuantity > 1 ? 's' : ''})`}</span>
