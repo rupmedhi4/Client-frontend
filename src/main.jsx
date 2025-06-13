@@ -7,7 +7,7 @@ import { ToastContainer } from 'react-toastify';
 
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>
-  <div className='mx-15'>
+  <div>
     <App />
   </div>
     <ToastContainer/>

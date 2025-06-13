@@ -20,9 +20,11 @@ export const signupUser = createAsyncThunk(
           },
         }
       );
-      console.log(response);
+      console.log("res in signup success",response);
       return response.data
     } catch (err) {
+      console.log("err in signup ",err);
+      
       return rejectWithValue(err);
     }
   }
@@ -43,7 +45,7 @@ export const loginUser = createAsyncThunk(
       )
       console.log(res);
       return res.data
-    } catch (error) {
+    } catch (err) {
       console.log(error);
       return rejectWithValue(err)
     }
@@ -141,6 +143,8 @@ const authSlice = createSlice({
       })
       .addCase(logout.fulfilled, (state, action) => {
         state.loading = false
+                state.isLogin = false;
+
         toast.success("Logout successful")
       })
       .addCase(logout.rejected, (state, action) => {

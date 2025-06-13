@@ -65,7 +65,7 @@ const cartSlice = createSlice({
     },
     closeCart: (state) => {
       state.isCartOpen = false;
-    },
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -115,5 +115,5 @@ const cartSlice = createSlice({
   },
 });
 
-export const { toggleCart, closeCart } = cartSlice.actions;
+export const { toggleCart, closeCart,setCartData } = cartSlice.actions;
 export default cartSlice.reducer;

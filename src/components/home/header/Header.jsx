@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 import { IoCartOutline } from "react-icons/io5";
 import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleCart } from '../../../slices/cartSlice';
+import { setCartData, toggleCart } from '../../../slices/cartSlice';
 import { loginUser, logout } from '../../../slices/authSlice';
 import { toast } from 'react-toastify';
 
@@ -23,7 +23,6 @@ export default function Header({ searchTerm, setSearchTerm }) {
     const logoutHandler = async () => {
         try {
             const res = await dispatch(logout());
-            console.log(res);
             setSearchTerm("")
             navigate('/login');
         } catch (error) {
@@ -33,7 +32,7 @@ export default function Header({ searchTerm, setSearchTerm }) {
     };
 
     return (
-        <header className="bg-white shadow-md rounded-full mt-2 sticky top-0 z-50">
+        <header className="bg-white shadow-md rounded-full mt-2 sticky top-0 z-50 mx-15" >
             <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between ">
                 <div onClick={() => navigate("/")} className='cursor-pointer'>
                     <img

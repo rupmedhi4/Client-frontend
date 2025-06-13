@@ -20,6 +20,10 @@ export default function PaymentOption() {
 
             }
             const res = await dispatch(placedOrder({orderDetails,id}))
+            if(res.type === "product/placedOrder/rejected"){
+                toast.error(res.payload);                
+            }
+            
             dispatch(setClearOrderData())
         } catch (error) {
             console.log(error)

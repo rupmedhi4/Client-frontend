@@ -57,15 +57,15 @@ export default function ViewProduct() {
         await dispatch(fetchAddToCart());
       } else if (res.payload.status === 400) {
         toast.error("Product already in cart")
-      } 
+      }
     } catch (error) {
       console.log(error);
-      
+
       toast.error("something went wrong")
     }
   }
 
-  const orderHandler =()=>{
+  const orderHandler = () => {
     navigate(`/home/product/order/${id}`)
   }
 
@@ -91,9 +91,9 @@ export default function ViewProduct() {
                 className="flex-1 bg-yellow-500 text-white py-3 rounded-md hover:bg-yellow-600 transition-colors duration-200 font-medium text-sm sm:text-base">
                 Add to Cart
               </button>
-              <button 
-              onClick={orderHandler}
-              className="flex-1 bg-orange-500 text-white py-3 rounded-md hover:bg-orange-600 transition-colors duration-200 font-medium text-sm sm:text-base">
+              <button
+                onClick={orderHandler}
+                className="flex-1 bg-orange-500 text-white py-3 rounded-md hover:bg-orange-600 transition-colors duration-200 font-medium text-sm sm:text-base">
                 Buy Now
               </button>
             </div>
@@ -105,17 +105,8 @@ export default function ViewProduct() {
 
               <div className="flex items-center gap-3 mb-3">
                 <span className="text-2xl sm:text-3xl font-bold text-gray-900">₹{product.price}</span>
-                <span className="text-gray-500 line-through text-sm sm:text-base">₹{parseInt(product.price) + 200}</span>
-                <span className="text-green-600 text-sm sm:text-base font-medium">(10% off)</span>
               </div>
-              <div className="mb-4">
-                <p className="text-sm font-semibold text-gray-800">Available Offers</p>
-                <ul className="text-sm text-gray-600 list-disc pl-5">
-                  <li>5% Cashback on Axis Bank Card</li>
-                  <li>10% off on first purchase above ₹2,000</li>
-                  <li>Free delivery on orders above ₹500</li>
-                </ul>
-              </div>
+
               <div className="space-y-3">
                 <p className="text-gray-600 text-sm sm:text-base">
                   <span className="font-semibold">Description: </span>{product.description}
@@ -123,16 +114,23 @@ export default function ViewProduct() {
                 <p className="text-gray-600 text-sm sm:text-base">
                   <span className="font-semibold">Category: </span>{product.category || 'General'}
                 </p>
-                <p className="text-gray-600 text-sm sm:text-base">
-                  <span className="font-semibold">Quantity Available: </span>{product.quantity || '100'}
+                <p className="text-gray-600 text-sm sm:text-base mt-2">
+                  {
+                    parseInt(product.quantity) <= 0 ? <span className="font-bold">Out of Stock</span> :
+                      <>
+                        <span className="font-bold">In Stock: </span>
+                        {product.quantity}
+                      </>
+                  }
                 </p>
+
 
               </div>
             </div>
             <div className="bg-white rounded-lg shadow-md p-6 mt-6">
               <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-3">Product Information</h3>
               <p className="text-sm text-gray-600">
-                Additional details about the product, such as specifications, warranty, or delivery information.
+                {product.description}
               </p>
             </div>
           </div>

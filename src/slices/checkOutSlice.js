@@ -22,7 +22,7 @@ export const addAddress = createAsyncThunk(
     }
 );
 export const placedOrder = createAsyncThunk(
-    'auth/placedOrder',
+    'product/placedOrder',
     async ({ orderDetails, id }, { rejectWithValue }) => {
         try {
             const res = await axios.post(`${apiAgent.createOrder}/${id}`, orderDetails, {
@@ -33,7 +33,7 @@ export const placedOrder = createAsyncThunk(
             return res
         } catch (error) {
             console.log(error);
-            return rejectWithValue(error.response?.data?.message || error.message);
+            return rejectWithValue(error.response?.data?.error || error.message);
         }
     }
 );
@@ -116,13 +116,12 @@ const checkOutSlice = createSlice({
             })
             .addCase(placedOrder.fulfilled, (state, action) => {
                 state.loading = false,
-                    toast.success("Order placed successfully")
+                toast.success("Order placed successfully")
 
             })
             .addCase(placedOrder.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
-                toast.error("Error in placed Order ")
             })
             //getOrders
             .addCase(getOrders.pending, (state) => {

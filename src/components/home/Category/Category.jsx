@@ -4,19 +4,19 @@ import { useNavigate } from 'react-router-dom';
 const categories = [
   {
     name: 'Fruits & Vegetables',
-    image: 'https://img.freepik.com/free-photo/vegetables-basket_74190-5826.jpg'
+    image: 'https://borobazar.vercel.app/_next/image?url=%2Fassets%2Fimages%2Fcategory%2Ffresh-vegetables.png&w=256&q=100'
   },
   {
     name: 'Dairy, Bread & Eggs',
-    image: 'https://img.freepik.com/free-photo/dairy-products-table_114579-8681.jpg'
+    image: 'https://e7.pngegg.com/pngimages/954/63/png-clipart-boiled-eggs-chicken-egg-boiled-egg-ramen-boiled-egg-white-food-thumbnail.png'
   },
   {
     name: 'Snacks & Namkeen',
-    image: 'https://img.freepik.com/free-photo/top-view-delicious-nachos-cheese-sauce_23-2148750879.jpg'
+    image: 'https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQQoPGqqls_oFSR8DDzHrd1998qq-ijykQcGhlSgPNhAsmeD7MN5yK18UZuUnh2RI79xcrXOaNm8Hr4NKjOVYbR8SvpPsNHbYm1Mr4gQtM-DS3CyxbfqxrAmQ'
   },
   {
     name: 'Beverages',
-    image: 'https://img.freepik.com/free-photo/fresh-fruit-juices-glasses_144627-18530.jpg'
+    image: 'https://picksy.vercel.app/static/f69fcd60b6fb19c342ad609f0d5f1b5b/57ddc/milk-2-update-1.webp'
   },
   {
     name: 'Staples',
@@ -24,31 +24,31 @@ const categories = [
   },
   {
     name: 'Personal Care',
-    image: 'https://img.freepik.com/free-photo/personal-care-products_53876-64791.jpg'
+    image: 'https://indian-retailer.s3.ap-south-1.amazonaws.com/s3fs-public/2023-01/personal-care.jpg'
   },
   {
     name: 'Home Cleaning',
-    image: 'https://img.freepik.com/free-photo/set-cleaning-products_144627-33146.jpg'
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEkggRHVbGZcgxvnL4nDiokJHiajmHmN1lXA&s'
   },
   {
     name: 'Baby Care',
-    image: 'https://img.freepik.com/free-photo/baby-products_144627-12129.jpg'
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpznRIJ4y2QD-Nm18G_jog9XhAHZMpGgDNRQ&s'
   },
   {
     name: 'Pet Care',
-    image: 'https://img.freepik.com/free-photo/puppy-kitten-together_53876-64841.jpg'
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtU5h1gYUWt2vrjvFFXX6hb8GRD_iIhCxc4g&s'
   },
   {
     name: 'Frozen Food',
-    image: 'https://img.freepik.com/free-photo/frozen-vegetables-mix_114579-41579.jpg'
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZ2UPmOujj8OWTe_pE_bozZAd-ZSJ_wGIKCQ&s'
   },
   {
     name: 'Organic Products',
-    image: 'https://img.freepik.com/free-photo/organic-products_144627-13259.jpg'
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQj1QgSHUBsXNZpg76czq1zkng_j_3ej9Xk_g&s'
   },
   {
     name: 'Other',
-    image: 'https://img.freepik.com/free-photo/various-groceries-bag_144627-23471.jpg'
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsoUVMkai_hNvgWziLgj649OfOSYFoZDz9Gg&s'
   }
 ];
 
@@ -62,11 +62,11 @@ export default function Category() {
   }
 
   return (
-    <div className="bg-gray-50 py-10 px-4 max-w-6xl mx-auto">
+    <div className="bg-gray-50 py-10 px-4 max-w-8xl mx-auto">
       <h2 className="text-3xl font-bold text-center mb-8 ">
         Shop Popular Categories
       </h2>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 text-center">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 text-center ">
         {categories.map((cat, index) => (
           <div
             onClick={()=>categoryHandler(cat.name)}

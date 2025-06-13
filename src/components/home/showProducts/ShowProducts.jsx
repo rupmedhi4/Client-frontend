@@ -2,9 +2,9 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { addToCart,fetchAddToCart } from '../../../slices/cartSlice';
+import { addToCart, fetchAddToCart } from '../../../slices/cartSlice';
 
-const ShowProducts=({ products, title })=> {
+const ShowProducts = ({ products, title }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch()
 
@@ -18,7 +18,7 @@ const ShowProducts=({ products, title })=> {
       const res = await dispatch(addToCart(id))
       if (res.type === "cart/addToCart/fulfilled") {
         toast.success("Product Add successfully")
-         await dispatch(fetchAddToCart());
+        await dispatch(fetchAddToCart());
       } else if (res.payload.status === 400) {
         toast.error("Product already in cart")
       } else {
@@ -58,10 +58,20 @@ const ShowProducts=({ products, title })=> {
                   ? product.description.slice(0, 20) + '...'
                   : product.description}
               </p>
+              <p className="text-gray-600 text-sm sm:text-base mt-2">
+                {
+                  parseInt(product.quantity) <= 0 ? <span className="font-bold">Out of Stock</span> :
+                  <>
+                    <span className="font-bold">In Stock: </span>
+                    {product.quantity}
+                  </>
+                  }              
+              </p>
             </div>
 
             <div className="flex justify-between items-center mt-2">
               <p className="text-lg font-bold text-blue-600">₹{product.price}</p>
+
               <button
                 onClick={() => addToCartHandler(product._id)}
                 className="bg-yellow-500 text-white px-2 py-1 rounded-md hover:bg-yellow-600 transition-colors duration-200 font-medium text-sm sm:text-base cursor-pointer"

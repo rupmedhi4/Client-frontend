@@ -17,7 +17,7 @@ export default function Home() {
   }, [allCreateProducts]);
 
   return (
-    <div>
+    <div className='mx-15'>
       
      
             <ImageSlider />
