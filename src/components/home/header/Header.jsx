@@ -75,27 +75,32 @@ export default function Header({ searchTerm, setSearchTerm }) {
                         </nav>
                     </>
                 ) : (
-                    <nav className="flex items-center space-x-4">
-                        <a href="http://localhost:5173/login" target="_black"
+                    <nav className=" flex flex-col md:flex-row md:justify-around items-center space-y-4 md:space-y-0 md:space-x-4">
+                        <a
+                            href="http://localhost:5173/login"
+                            target="_blank" // ✅ fixed here
+                            rel="noopener noreferrer"
                             className="bg-green-700 hover:bg-green-800 text-white font-semibold py-2 px-5 rounded-md transition duration-300"
                         >
-                       
-                             Go To Admin Page
-                        
+                            Go To Admin Page
                         </a>
-                        <button
-                            onClick={() => navigate("/login")}
-                            className="bg-green-700 hover:bg-green-800 text-white font-semibold py-2 px-5 rounded-md transition duration-300"
-                        >
-                            Login
-                        </button>
-                        <button
-                            onClick={() => navigate("/signup")}
-                            className="bg-green-700 hover:bg-green-800 text-white font-semibold py-2 px-5 rounded-md transition duration-300"
-                        >
-                            Signup
-                        </button>
+
+                        <div className="flex space-x-4">
+                            <button
+                                onClick={() => navigate("/login")}
+                                className="bg-green-700 hover:bg-green-800 text-white font-semibold py-2 px-5 rounded-md transition duration-300"
+                            >
+                                Login
+                            </button>
+                            <button
+                                onClick={() => navigate("/signup")}
+                                className="bg-green-700 hover:bg-green-800 text-white font-semibold py-2 px-5 rounded-md transition duration-300"
+                            >
+                                Signup
+                            </button>
+                        </div>
                     </nav>
+
                 )}
             </div>
         </header>
