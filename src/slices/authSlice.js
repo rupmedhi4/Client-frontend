@@ -21,12 +21,12 @@ export const signupUser = createAsyncThunk(
           },
         }
       );
-      Cookies.set('jwt', response.data.token, {
-        path: '/',
-        secure: true,
-        sameSite: 'None',
-        expires: 14,
-      });
+      // Cookies.set('jwt', response.data.token, {
+      //   path: '/',
+      //   secure: true,
+      //   sameSite: 'None',
+      //   expires: 14,
+      // });
       console.log("res in signup success", response);
       return response.data
     } catch (error) {
@@ -50,12 +50,12 @@ export const loginUser = createAsyncThunk(
       }
       )
 
-      Cookies.set('jwt', res.data.token, {
-        path: '/',
-        secure: true,
-        sameSite: 'None',
-        expires: 14,
-      });
+      // Cookies.set('jwt', res.data.token, {
+      //   path: '/',
+      //   secure: true,
+      //   sameSite: 'None',
+      //   expires: 14,
+      // });
 
       console.log(res);
       return res.data
@@ -75,7 +75,7 @@ export const logout = createAsyncThunk(
         withCredentials: true
       }
       );
-      Cookies.remove('jwt')
+     // Cookies.remove('jwt')
       console.log("from logout func", res)
       return res.data;
     } catch (error) {
