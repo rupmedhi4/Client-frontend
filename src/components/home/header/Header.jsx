@@ -76,6 +76,13 @@ export default function Header({ searchTerm, setSearchTerm }) {
                     </>
                 ) : (
                     <nav className="flex items-center space-x-4">
+                        <a href="http://localhost:5173/login" target="_black"
+                            className="bg-green-700 hover:bg-green-800 text-white font-semibold py-2 px-5 rounded-md transition duration-300"
+                        >
+                       
+                             Go To Admin Page
+                        
+                        </a>
                         <button
                             onClick={() => navigate("/login")}
                             className="bg-green-700 hover:bg-green-800 text-white font-semibold py-2 px-5 rounded-md transition duration-300"

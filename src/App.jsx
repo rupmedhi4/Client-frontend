@@ -16,9 +16,10 @@ export default function App() {
   const dispatch = useDispatch()
   const { isCartOpen, cartData } = useSelector((state) => state.cart)
   const { isLogin } = useSelector((state) => state.auth)
+  const { allCreateProducts } = useSelector((state) => state.product);
+
   const [searchTerm, setSearchTerm] = useState("");
 
-  const { allCreateProducts } = useSelector((state) => state.product);
 
   const filteredProducts = allCreateProducts.filter(p =>
     p.name.toLowerCase().includes(searchTerm.toLowerCase())

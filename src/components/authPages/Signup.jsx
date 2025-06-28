@@ -43,6 +43,7 @@ export default function Signup() {
 
       if (res.type === "auth-client/signupUser/fulfilled") {
         toast.success("User created successfully")
+        console.log(res);
         
         setFormData({
           name: '',

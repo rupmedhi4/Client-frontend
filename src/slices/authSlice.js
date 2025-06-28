@@ -3,6 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { apiAgent } from '../apiAgent';
 import { toast } from 'react-toastify';
+import Cookies from 'js-cookie';
 
 
 
@@ -20,12 +21,17 @@ export const signupUser = createAsyncThunk(
           },
         }
       );
-      console.log("res in signup success",response);
+      Cookies.set('jwt', response.data.token, {
+        path: '/',
+        secure: true,
+        sameSite: 'None',
+        expires: 14,
+      });
+      console.log("res in signup success", response);
       return response.data
-    } catch (err) {
-      console.log("err in signup ",err);
-      
-      return rejectWithValue(err);
+    } catch (error) {
+      console.log("err in signup ", error);
+      return rejectWithValue(error);
     }
   }
 );
@@ -43,10 +49,18 @@ export const loginUser = createAsyncThunk(
         }
       }
       )
+
+      Cookies.set('jwt', res.data.token, {
+        path: '/',
+        secure: true,
+        sameSite: 'None',
+        expires: 14,
+      });
+
       console.log(res);
       return res.data
     } catch (err) {
-      console.log(error);
+      console.log(err);
       return rejectWithValue(err)
     }
   }
@@ -57,14 +71,14 @@ export const logout = createAsyncThunk(
   'auth/logout',
   async (_, { rejectWithValue }) => {
     try {
-      const res = await axios.post(apiAgent.logOut,{}, {
+      const res = await axios.post(apiAgent.logOut, {}, {
         withCredentials: true
       }
-    );
+      );
       return res.data;
     } catch (error) {
-      console.error(error); 
-      return rejectWithValue(error.response?.data || error.message); 
+      console.error(error);
+      return rejectWithValue(error.response?.data || error.message);
     }
   }
 );
@@ -143,7 +157,7 @@ const authSlice = createSlice({
       })
       .addCase(logout.fulfilled, (state, action) => {
         state.loading = false
-                state.isLogin = false;
+        state.isLogin = false;
 
         toast.success("Logout successful")
       })
