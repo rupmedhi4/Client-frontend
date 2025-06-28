@@ -75,7 +75,7 @@ export const logout = createAsyncThunk(
         withCredentials: true
       }
       );
-      Cookies.remove('jwt')
+      Cookies.remove('jwt', { path: '/' });
       console.log("from logout func", res)
       return res.data;
     } catch (error) {
