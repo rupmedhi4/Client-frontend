@@ -75,10 +75,11 @@ export const logout = createAsyncThunk(
         withCredentials: true
       }
       );
-      console.log("from logout func",res)
+      Cookies.remove('jwt')
+      console.log("from logout func", res)
       return res.data;
     } catch (error) {
-      console.error("from logout error func",error);
+      console.error("from logout error func", error);
       return rejectWithValue(error.response?.data || error.message);
     }
   }
