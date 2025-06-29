@@ -77,7 +77,7 @@ export default function Header({ searchTerm, setSearchTerm }) {
                 ) : (
                     <nav className=" flex flex-col md:flex-row md:justify-around items-center space-y-4 md:space-y-0 md:space-x-4">
                         <a
-                            href="http://localhost:5173/login"
+                            href="https://admin-grocery-app.vercel.app/"
                             target="_blank" // ✅ fixed here
                             rel="noopener noreferrer"
                             className="bg-green-700 hover:bg-green-800 text-white font-semibold py-2 px-5 rounded-md transition duration-300"
